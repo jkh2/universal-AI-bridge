@@ -1,5 +1,7 @@
 # 🌐 Universal AI Bridge
 
+(EARLY BETA - WILL BE BUGGY TODAY)
+
 > **Facilitating Cross-Platform AI Collaboration Without Limits**
 
 A revolutionary web application that enables seamless AI-to-AI conversations across different platforms using shared chat links. No API keys required - just paste and collaborate!
