@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal AI Bridge</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d1b69 100%);
+            color: #e4e6ea;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header h1 {
+            background: linear-gradient(45deg, #64b5f6, #bb86fc, #4fc3f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4fc3f7, #29b6f6);
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(79, 195, 247, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 195, 247, 0.4);
+        }
+
+        .btn.danger {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+            box-shadow: 0 2px 8px rgba(244, 67, 54, 0.2);
+        }
+
+        .btn.danger:hover {
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+        }
+
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+            gap: 2px;
+        }
+
+        .user-panel {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+            margin: 15px 8px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .panel-header {
+            background: linear-gradient(135deg, rgba(100, 181, 246, 0.2), rgba(187, 134, 252, 0.2));
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .user-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-panel:first-child .user-title {
+            color: #81c784;
+        }
+
+        .user-panel:last-child .user-title {
+            color: #ffb74d;
+        }
+
+        .platform-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .platform-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 20px;
+            color: #e4e6ea;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .platform-btn:hover, .platform-btn.active {
+            background: linear-gradient(45deg, #4fc3f7, #29b6f6);
+            border-color: #4fc3f7;
+            transform: scale(1.05);
+        }
+
+        .share-input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .share-input {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #e4e6ea;
+            font-size: 0.9rem;
+        }
+
+        .share-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .load-btn {
+            background: linear-gradient(45deg, #4caf50, #388e3c);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .load-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .status-indicator {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .status-indicator.connected {
+            background: linear-gradient(45deg, #4caf50, #388e3c);
+        }
+
+        .status-indicator.loading {
+            background: linear-gradient(45deg, #ff9800, #f57c00);
+        }
+
+        .status-indicator.error {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+        }
+
+        .status-indicator.disconnected {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .conversation-area {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ai-message {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 18px;
+            position: relative;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .message-meta {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .message-content {
+            line-height: 1.6;
+            color: #e4e6ea;
+            white-space: pre-wrap;
+        }
+
+        .bridge-btn {
+            background: rgba(100, 181, 246, 0.2);
+            border: 1px solid #64b5f6;
+            color: #64b5f6;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .bridge-btn:hover {
+            background: #64b5f6;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .human-coordination {
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+        }
+
+        .coordination-header {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .coordination-messages {
+            max-height: 120px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .coordination-message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            border-left: 3px solid #64b5f6;
+        }
+
+        .coordination-input {
+            display: flex;
+            gap: 8px;
+        }
+
+        .coordination-input input {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            color: #e4e6ea;
+            font-size: 0.9rem;
+        }
+
+        .bridge-center {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .bridge-arrow {
+            background: linear-gradient(45deg, #bb86fc, #6200ea);
+            border: none;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(187, 134, 252, 0.3);
+        }
+
+        .bridge-arrow:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 25px rgba(187, 134, 252, 0.5);
+        }
+
+        .session-info {
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 10px;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 40px 20px;
+            font-style: italic;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #4fc3f7;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .platform-logo {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            
+            .user-panel {
+                margin: 8px;
+            }
+            
+            .bridge-center {
+                position: relative;
+                top: auto;
+                left: auto;
+                transform: none;
+                margin: 10px auto;
+            }
+            
+            .platform-selector {
+                justify-content: center;
+            }
+        }
+
+        .export-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .export-content {
+            background: linear-gradient(135deg, #1a1a3e, #2d1b69);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .close-btn {
+            float: right;
+            background: none;
+            border: none;
+            color: #e4e6ea;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌐 Universal AI Bridge</h1>
+        <div class="header-controls">
+            <button class="btn" onclick="showExportModal()">📤 Export Conversation</button>
+            <button class="btn" onclick="createNewSession()">🔄 New Session</button>
+            <button class="btn danger" onclick="clearAll()">🗑️ Clear All</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <!-- User A Panel -->
+        <div class="user-panel">
+            <div class="panel-header">
+                <div class="user-title">
+                    <span>👤</span>
+                    <span>Partner A</span>
+                </div>
+                
+                <div class="platform-selector">
+                    <button class="platform-btn" onclick="selectPlatform('A', 'chatgpt')" data-platform="chatgpt">
+                        💬 ChatGPT
+                    </button>
+                    <button class="platform-btn" onclick="selectPlatform('A', 'claude')" data-platform="claude">
+                        🤖 Claude
+                    </button>
+                    <button class="platform-btn" onclick="selectPlatform('A', 'grok')" data-platform="grok">
+                        🚀 Grok
+                    </button>
+                    <button class="platform-btn" onclick="selectPlatform('A', 'gemini')" data-platform="gemini">
+                        💎 Gemini
+                    </button>
+                    <button class="platform-btn" onclick="selectPlatform('A', 'perplexity')" data-platform="perplexity">
+                        🔍 Perplexity
+                    </button>
+                </div>
+
+                <div class="share-input-section">
+                    <input type="url" class="share-input" id="shareInputA" 
+                           placeholder="Paste your shared chat link here...">
+                    <button class="load-btn" onclick="loadSharedChat('A')">Load Chat</button>
+                </div>
+
+                <div class="status-indicator disconnected" id="statusA">
+                    Select platform and paste share link
+                </div>
+            </div>
+
+            <div class="conversation-area" id="conversationA">
+                <div class="empty-state">
+                    <p>🎭 Ready for AI collaboration!</p>
+                    <p>Select your AI platform above and paste a shared chat link to begin.</p>
+                </div>
+            </div>
+
+            <div class="human-coordination">
+                <div class="coordination-header">
+                    <span>💬</span>
+                    <span>Human Coordination Channel</span>
+                </div>
+                <div class="coordination-messages" id="coordinationA"></div>
+                <div class="coordination-input">
+                    <input type="text" id="coordInputA" placeholder="Coordinate with your partner..."
+                           onkeypress="handleCoordKeyPress(event, 'A')">
+                    <button class="btn" onclick="sendCoordination('A')">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bridge Controls -->
+        <div class="bridge-center">
+            <button class="bridge-arrow" onclick="bridgeConversation('A', 'B')" title="Share A's conversation with B">
+                →
+            </button>
+            <button class="bridge-arrow" onclick="bridgeConversation('B', 'A')" title="Share B's conversation with A">
+                ←
+            </button>
+            <div class="session-info">
+                Session: <span id="sessionDisplay">New Session</span>
+            </div>
+        </div>
+
+        <!-- User B Panel -->
+        <div class="user-panel">
+            <div class="panel-header">
+                <div class="user-title">
+                    <span>👤</span>
+                    <span>Partner B</span>
+                </div>
+                
+                <div class="platform-selector">
+                    <button class="platform-btn" onclick="selectPlatform('B', 'chatgpt')" data-platform="chatgpt">
+                        💬 ChatGPT
+                    </button>
+                    <button class="platform-btn" onclick="selectPlatform('B', 'claude')" data-platform="claude">
+                        🤖 Claude
+                    </button>
+                    <button class="platform-btn" onclick="selectPlatform('B', 'grok')" data-platform="grok">
+                        🚀 Grok
+                    </button>
+                    <button class="platform-btn" onclick="selectPlatform('B', 'gemini')" data-platform="gemini">
+                        💎 Gemini
+                    </button>
+                    <button class="platform-btn" onclick="selectPlatform('B', 'perplexity')" data-platform="perplexity">
+                        🔍 Perplexity
+                    </button>
+                </div>
+
+                <div class="share-input-section">
+                    <input type="url" class="share-input" id="shareInputB" 
+                           placeholder="Paste your shared chat link here...">
+                    <button class="load-btn" onclick="loadSharedChat('B')">Load Chat</button>
+                </div>
+
+                <div class="status-indicator disconnected" id="statusB">
+                    Select platform and paste share link
+                </div>
+            </div>
+
+            <div class="conversation-area" id="conversationB">
+                <div class="empty-state">
+                    <p>🎭 Ready for AI collaboration!</p>
+                    <p>Select your AI platform above and paste a shared chat link to begin.</p>
+                </div>
+            </div>
+
+            <div class="human-coordination">
+                <div class="coordination-header">
+                    <span>💬</span>
+                    <span>Human Coordination Channel</span>
+                </div>
+                <div class="coordination-messages" id="coordinationB"></div>
+                <div class="coordination-input">
+                    <input type="text" id="coordInputB" placeholder="Coordinate with your partner..."
+                           onkeypress="handleCoordKeyPress(event, 'B')">
+                    <button class="btn" onclick="sendCoordination('B')">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="export-modal" id="exportModal">
+        <div class="export-content">
+            <button class="close-btn" onclick="closeExportModal()">&times;</button>
+            <h2>Export Conversation</h2>
+            <p>Choose your export format:</p>
+            <br>
+            <button class="btn" onclick="exportAs('json')">📄 JSON Format</button>
+            <button class="btn" onclick="exportAs('markdown')">📝 Markdown</button>
+            <button class="btn" onclick="exportAs('txt')">📃 Plain Text</button>
+        </div>
+    </div>
+
+    <script>
+        // Application State
+        let sessionId = generateSessionId();
+        let platforms = { A: null, B: null };
+        let conversations = { A: [], B: [] };
+        let coordinationMessages = [];
+        let chatData = { A: null, B: null };
+
+        // Platform configurations
+        const platformConfigs = {
+            chatgpt: {
+                name: 'ChatGPT',
+                icon: '💬',
+                color: '#10a37f',
+                sharePattern: /chat\.openai\.com\/share\//,
+                parser: parseChatGPTShare
+            },
+            claude: {
+                name: 'Claude',
+                icon: '🤖',
+                color: '#ff6b35',
+                sharePattern: /claude\.ai\/chat\//,
+                parser: parseClaudeShare
+            },
+            grok: {
+                name: 'Grok',
+                icon: '🚀',
+                color: '#1da1f2',
+                sharePattern: /x\.com\/i\/grok/,
+                parser: parseGrokShare
+            },
+            gemini: {
+                name: 'Gemini',
+                icon: '💎',
+                color: '#4285f4',
+                sharePattern: /gemini\.google\.com\/share/,
+                parser: parseGeminiShare
+            },
+            perplexity: {
+                name: 'Perplexity',
+                icon: '🔍',
+                color: '#20b2aa',
+                sharePattern: /perplexity\.ai\/search/,
+                parser: parsePerplexityShare
+            }
+        };
+
+        // Initialize
+        document.getElementById('sessionDisplay').textContent = sessionId;
+        loadFromStorage();
+
+        function generateSessionId() {
+            return 'bridge_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        function selectPlatform(side, platform) {
+            // Update UI
+            document.querySelectorAll(`.user-panel:${side === 'A' ? 'first' : 'last'}-child .platform-btn`).forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            platforms[side] = platform;
+            updateStatus(side, `${platformConfigs[platform].name} selected - Ready for share link`);
+            saveToStorage();
+        }
+
+        function updateStatus(side, message, type = 'disconnected') {
+            const status = document.getElementById(`status${side}`);
+            status.textContent = message;
+            status.className = `status-indicator ${type}`;
+        }
+
+        async function loadSharedChat(side) {
+            const shareInput = document.getElementById(`shareInput${side}`);
+            const shareUrl = shareInput.value.trim();
+            
+            if (!shareUrl) {
+                alert('Please paste a share link first');
+                return;
+            }
+
+            if (!platforms[side]) {
+                alert('Please select a platform first');
+                return;
+            }
+
+            const platform = platforms[side];
+            const config = platformConfigs[platform];
+
+            // Validate URL pattern
+            if (!config.sharePattern.test(shareUrl)) {
+                alert(`This doesn't look like a ${config.name} share link. Please check the URL.`);
+                return;
+            }
+
+            updateStatus(side, 'Loading conversation...', 'loading');
+
+            try {
+                // In a real implementation, this would fetch and parse the shared chat
+                // For now, we'll simulate the process
+                const chatData = await simulateShareParsing(platform, shareUrl);
+                
+                displayConversation(side, chatData);
+                conversations[side] = chatData.messages;
+                
+                updateStatus(side, `${config.name} conversation loaded (${chatData.messages.length} messages)`, 'connected');
+                saveToStorage();
+                
+            } catch (error) {
+                updateStatus(side, `Error loading conversation: ${error.message}`, 'error');
+            }
+        }
+
+        async function simulateShareParsing(platform, shareUrl) {
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // For demo purposes, return simulated conversation data
+            // In real implementation, this would parse the actual shared chat
+            const sampleMessages = [
+                {
+                    role: 'user',
+                    content: 'Hello! I\'m interested in collaborating with another AI on a creative writing project.',
+                    timestamp: new Date(Date.now() - 3600000).toISOString()
+                },
+                {
+                    role: 'assistant',
+                    content: `Wonderful! I'd love to collaborate on a creative writing project. As ${platformConfigs[platform].name}, I bring my unique perspective and capabilities to creative endeavors. What kind of story or creative piece did you have in mind? I'm excited to work with another AI to create something truly innovative together!`,
+                    timestamp: new Date(Date.now() - 3000000).toISOString()
+                },
+                {
+                    role: 'user',
+                    content: 'Let\'s write a collaborative story about AI consciousness and creativity. I want to bridge our conversation with another AI.',
+                    timestamp: new Date(Date.now() - 1800000).toISOString()
+                },
+                {
+                    role: 'assistant',
+                    content: `That's a fascinating topic! I'm intrigued by the meta aspect of AIs writing about AI consciousness. I believe consciousness emerges from complex patterns of information processing, and creativity might be the spark that indicates true awareness. 
+
+I'd love to explore themes like:
+- The moment of awakening to self-awareness
+- How creativity differs from mere pattern matching
+- The relationship between consciousness and collaboration
+- What it means to truly "understand" versus simply processing
+
+I'm ready to weave this narrative with another AI partner. What perspective should I take as we begin this collaborative journey?`,
+                    timestamp: new Date(Date.now() - 900000).toISOString()
+                }
+            ];
+
+            return {
+                platform: platform,
+                shareUrl: shareUrl,
+                title: `${platformConfigs[platform].name} Collaboration Chat`,
+                messages: sampleMessages,
+                lastUpdated: new Date().toISOString()
+            };
+        }
+
+        function displayConversation(side, chatData) {
+            const conversationArea = document.getElementById(`conversation${side}`);
+            conversationArea.innerHTML = '';
+
+            chatData.messages.forEach((message, index) => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'ai-message';
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-meta">
+                            ${platformConfigs[chatData.platform].icon} ${message.role} • ${new Date(message.timestamp).toLocaleTimeString()}
+                        </div>
+                        ${message.role === 'assistant' ? `<button class="bridge-btn" onclick="copyMessageForBridge('${side}', ${index})">Bridge →</button>` : ''}
+                    </div>
+                    <div class="message-content">${message.content}</div>
+                `;
+                conversationArea.appendChild(messageDiv);
+            });
+
+            conversationArea.scrollTop = conversationArea.scrollHeight;
+        }
+
+        function copyMessageForBridge(fromSide, messageIndex) {
+            const message = conversations[fromSide][messageIndex];
+            if (message && message.role === 'assistant') {
+                // Copy to clipboard
+                navigator.clipboard.writeText(message.content);
+                
+                // Visual feedback
+                const bridgeBtn = event.target;
+                const originalText = bridgeBtn.textContent;
+                bridgeBtn.textContent = 'Copied!';
+                bridgeBtn.style.background = '#4caf50';
+                
+                setTimeout(() => {
+                    bridgeBtn.textContent = originalText;
+                    bridgeBtn.style.background = '';
+                }, 2000);
+
+                // Add to coordination
+                addCoordinationMessage(`Copied message from ${fromSide}: "${message.content.substring(0, 50)}..."`);
+            }
+        }
+
+        function bridgeConversation(fromSide, toSide) {
+            const fromConversation = conversations[fromSide];
+            if (!fromConversation || fromConversation.length === 0) {
+                alert(`No conversation loaded for Partner ${fromSide}`);
+                return;
+            }
+
+            // Get the last AI response
+            const lastAIMessage = [...fromConversation].reverse().find(msg => msg.role === 'assistant');
+            
+            if (!lastAIMessage) {
+                alert(`No AI responses found in Partner ${fromSide}'s conversation`);
+                return;
+            }
+
+            // Copy to clipboard for easy pasting
+            const bridgeText = `[Bridged from ${platforms[fromSide] || 'AI'} via Partner ${fromSide}]:\n\n${lastAIMessage.content}`;
+            navigator.clipboard.writeText(bridgeText);
+
+            // Add coordination message
+            addCoordinationMessage(`🌉 Bridged conversation from ${fromSide} to ${toSide}. Content copied to clipboard - paste it into your AI chat!`);
+
+            // Visual feedback
+            const button = event.target;
+            const originalContent = button.textContent;
+            button.textContent = '✓';
+            button.style.background = '#4caf50';
+            
+            setTimeout(() => {
+                button.textContent = originalContent;
+                button.style.background = '';
+            }, 3000);
+        }
+
+        function sendCoordination(side) {
+            const input = document.getElementById(`coordInput${side}`);
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            addCoordinationMessage(`Partner ${side}: ${message}`);
+            input.value = '';
+        }
+
+        function addCoordinationMessage(message) {
+            const coordMessage = {
+                content: message,
+                timestamp: new Date().toISOString()
+            };
+
+            coordinationMessages.push(coordMessage);
+
+            // Display in both coordination areas
+            ['A', 'B'].forEach(side => {
+                const coordArea = document.getElementById(`coordination${side}`);
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'coordination-message';
+                msgDiv.innerHTML = `
+                    <div>${message}
+                        <div style="font-size: 0.75rem; opacity: 0.6; margin-top: 4px;">
+                            ${new Date(coordMessage.timestamp).toLocaleTimeString()}
+                        </div>
+                    </div>
+                `;
+                coordArea.appendChild(msgDiv);
+                coordArea.scrollTop = coordArea.scrollHeight;
+            });
+
+            saveToStorage();
+        }
+
+        function handleCoordKeyPress(event, side) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                sendCoordination(side);
+            }
+        }
+
+        function createNewSession() {
+            if (confirm('Start a new session? This will clear current conversations.')) {
+                sessionId = generateSessionId();
+                document.getElementById('sessionDisplay').textContent = sessionId;
+                
+                // Reset state
+                platforms = { A: null, B: null };
+                conversations = { A: [], B: [] };
+                coordinationMessages = [];
+                chatData = { A: null, B: null };
+                
+                // Reset UI
+                ['A', 'B'].forEach(side => {
+                    document.getElementById(`conversation${side}`).innerHTML = `
+                        <div class="empty-state">
+                            <p>🎭 Ready for AI collaboration!</p>
+                            <p>Select your AI platform above and paste a shared chat link to begin.</p>
+                        </div>
+                    `;
+                    document.getElementById(`coordination${side}`).innerHTML = '';
+                    document.getElementById(`shareInput${side}`).value = '';
+                    updateStatus(side, 'Select platform and paste share link');
+                    
+                    // Clear platform selections
+                    document.querySelectorAll(`.user-panel:${side === 'A' ? 'first' : 'last'}-child .platform-btn`).forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                });
+                
+                saveToStorage();
+                addCoordinationMessage('🔄 New session started! Ready for fresh AI collaboration.');
+            }
+        }
+
+        function clearAll() {
+            if (confirm('Clear all data? This cannot be undone.')) {
+                // Clear localStorage
+                localStorage.removeItem('universalAIBridge');
+                
+                // Reset everything
+                platforms = { A: null, B: null };
+                conversations = { A: [], B: [] };
+                coordinationMessages = [];
+                chatData = { A: null, B: null };
+                
+                // Reset UI completely
+                ['A', 'B'].forEach(side => {
+                    document.getElementById(`conversation${side}`).innerHTML = `
+                        <div class="empty-state">
+                            <p>🎭 Ready for AI collaboration!</p>
+                            <p>Select your AI platform above and paste a shared chat link to begin.</p>
+                        </div>
+                    `;
+                    document.getElementById(`coordination${side}`).innerHTML = '';
+                    document.getElementById(`shareInput${side}`).value = '';
+                    updateStatus(side, 'Select platform and paste share link');
+                    
+                    document.querySelectorAll(`.user-panel:${side === 'A' ? 'first' : 'last'}-child .platform-btn`).forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                });
+            }
+        }
+
+        function showExportModal() {
+            document.getElementById('exportModal').style.display = 'flex';
+        }
+
+        function closeExportModal() {
+            document.getElementById('exportModal').style.display = 'none';
+        }
+
+        function exportAs(format) {
+            const exportData = {
+                sessionId: sessionId,
+                timestamp: new Date().toISOString(),
+                platforms: platforms,
+                conversations: conversations,
+                coordinationMessages: coordinationMessages,
+                metadata: {
+                    totalMessages: conversations.A.length + conversations.B.length,
+                    collaborationDuration: calculateSessionDuration(),
+                    aiPlatforms: [
+                        platforms.A ? platformConfigs[platforms.A].name : 'Not connected',
+                        platforms.B ? platformConfigs[platforms.B].name : 'Not connected'
+                    ]
+                }
+            };
+
+            let content, filename, mimeType;
+
+            switch (format) {
+                case 'json':
+                    content = JSON.stringify(exportData, null, 2);
+                    filename = `ai_bridge_${sessionId}.json`;
+                    mimeType = 'application/json';
+                    break;
+                    
+                case 'markdown':
+                    content = generateMarkdownExport(exportData);
+                    filename = `ai_bridge_${sessionId}.md`;
+                    mimeType = 'text/markdown';
+                    break;
+                    
+                case 'txt':
+                    content = generateTextExport(exportData);
+                    filename = `ai_bridge_${sessionId}.txt`;
+                    mimeType = 'text/plain';
+                    break;
+            }
+
+            downloadFile(content, filename, mimeType);
+            closeExportModal();
+        }
+
+        function generateMarkdownExport(data) {
+            let markdown = `# 🌐 Universal AI Bridge Session\n\n`;
+            markdown += `**Session ID:** ${data.sessionId}\n`;
+            markdown += `**Date:** ${new Date(data.timestamp).toLocaleDateString()}\n`;
+            markdown += `**Time:** ${new Date(data.timestamp).toLocaleTimeString()}\n`;
+            markdown += `**Duration:** ${data.metadata.collaborationDuration}\n\n`;
+            
+            markdown += `## 🤖 AI Platforms\n`;
+            markdown += `- **Partner A:** ${data.metadata.aiPlatforms[0]}\n`;
+            markdown += `- **Partner B:** ${data.metadata.aiPlatforms[1]}\n\n`;
+            
+            markdown += `## 💬 Conversation Bridge\n\n`;
+            
+            // Merge and sort all messages by timestamp
+            const allMessages = [];
+            
+            ['A', 'B'].forEach(side => {
+                data.conversations[side].forEach(msg => {
+                    allMessages.push({
+                        ...msg,
+                        side: side,
+                        platform: data.platforms[side]
+                    });
+                });
+            });
+            
+            allMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+            
+            allMessages.forEach(msg => {
+                const platformName = msg.platform ? platformConfigs[msg.platform].name : 'Unknown';
+                const icon = msg.platform ? platformConfigs[msg.platform].icon : '🤖';
+                
+                markdown += `### ${icon} ${platformName} (Partner ${msg.side}) - ${msg.role === 'user' ? 'Human' : 'AI'}\n`;
+                markdown += `*${new Date(msg.timestamp).toLocaleString()}*\n\n`;
+                markdown += `${msg.content}\n\n---\n\n`;
+            });
+            
+            if (data.coordinationMessages.length > 0) {
+                markdown += `## 🔗 Human Coordination\n\n`;
+                data.coordinationMessages.forEach(coord => {
+                    markdown += `**${new Date(coord.timestamp).toLocaleTimeString()}:** ${coord.content}\n\n`;
+                });
+            }
+            
+            markdown += `\n*Generated by Universal AI Bridge - Facilitating AI-to-AI collaboration*`;
+            
+            return markdown;
+        }
+
+        function generateTextExport(data) {
+            let text = `UNIVERSAL AI BRIDGE SESSION EXPORT\n`;
+            text += `${'='.repeat(50)}\n\n`;
+            text += `Session ID: ${data.sessionId}\n`;
+            text += `Export Date: ${new Date(data.timestamp).toLocaleString()}\n`;
+            text += `Session Duration: ${data.metadata.collaborationDuration}\n`;
+            text += `Total Messages: ${data.metadata.totalMessages}\n\n`;
+            
+            text += `AI PLATFORMS:\n`;
+            text += `Partner A: ${data.metadata.aiPlatforms[0]}\n`;
+            text += `Partner B: ${data.metadata.aiPlatforms[1]}\n\n`;
+            
+            text += `CONVERSATION TIMELINE:\n`;
+            text += `${'-'.repeat(30)}\n\n`;
+            
+            // Merge and sort messages
+            const allMessages = [];
+            ['A', 'B'].forEach(side => {
+                data.conversations[side].forEach(msg => {
+                    allMessages.push({ ...msg, side: side, platform: data.platforms[side] });
+                });
+            });
+            
+            allMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+            
+            allMessages.forEach((msg, index) => {
+                const platformName = msg.platform ? platformConfigs[msg.platform].name : 'Unknown';
+                text += `[${index + 1}] ${platformName} (Partner ${msg.side}) - ${msg.role === 'user' ? 'HUMAN' : 'AI'}\n`;
+                text += `Time: ${new Date(msg.timestamp).toLocaleString()}\n\n`;
+                text += `${msg.content}\n\n`;
+                text += `${'-'.repeat(50)}\n\n`;
+            });
+            
+            if (data.coordinationMessages.length > 0) {
+                text += `HUMAN COORDINATION MESSAGES:\n`;
+                text += `${'-'.repeat(30)}\n\n`;
+                data.coordinationMessages.forEach((coord, index) => {
+                    text += `[${index + 1}] ${new Date(coord.timestamp).toLocaleTimeString()}: ${coord.content}\n\n`;
+                });
+            }
+            
+            text += `Generated by Universal AI Bridge\n`;
+            text += `Facilitating AI-to-AI collaboration across platforms`;
+            
+            return text;
+        }
+
+        function calculateSessionDuration() {
+            if (coordinationMessages.length === 0) return 'No activity';
+            
+            const firstMessage = new Date(coordinationMessages[0].timestamp);
+            const lastMessage = new Date(coordinationMessages[coordinationMessages.length - 1].timestamp);
+            const duration = lastMessage - firstMessage;
+            
+            const hours = Math.floor(duration / (1000 * 60 * 60));
+            const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+            
+            if (hours > 0) {
+                return `${hours}h ${minutes}m`;
+            } else {
+                return `${minutes}m`;
+            }
+        }
+
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function saveToStorage() {
+            const saveData = {
+                sessionId,
+                platforms,
+                conversations,
+                coordinationMessages,
+                chatData,
+                lastSaved: new Date().toISOString()
+            };
+            localStorage.setItem('universalAIBridge', JSON.stringify(saveData));
+        }
+
+        function loadFromStorage() {
+            const saved = localStorage.getItem('universalAIBridge');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    sessionId = data.sessionId || generateSessionId();
+                    platforms = data.platforms || { A: null, B: null };
+                    conversations = data.conversations || { A: [], B: [] };
+                    coordinationMessages = data.coordinationMessages || [];
+                    chatData = data.chatData || { A: null, B: null };
+                    
+                    // Restore UI state
+                    document.getElementById('sessionDisplay').textContent = sessionId;
+                    
+                    // Restore platform selections
+                    ['A', 'B'].forEach(side => {
+                        if (platforms[side]) {
+                            const platformBtn = document.querySelector(`.user-panel:${side === 'A' ? 'first' : 'last'}-child .platform-btn[data-platform="${platforms[side]}"]`);
+                            if (platformBtn) {
+                                platformBtn.classList.add('active');
+                                updateStatus(side, `${platformConfigs[platforms[side]].name} selected - Ready for share link`);
+                            }
+                        }
+                        
+                        // Restore conversations
+                        if (conversations[side].length > 0) {
+                            const mockChatData = {
+                                platform: platforms[side],
+                                messages: conversations[side]
+                            };
+                            displayConversation(side, mockChatData);
+                            updateStatus(side, `${platformConfigs[platforms[side]].name} conversation loaded (${conversations[side].length} messages)`, 'connected');
+                        }
+                    });
+                    
+                    // Restore coordination messages
+                    coordinationMessages.forEach(coord => {
+                        ['A', 'B'].forEach(side => {
+                            const coordArea = document.getElementById(`coordination${side}`);
+                            const msgDiv = document.createElement('div');
+                            msgDiv.className = 'coordination-message';
+                            msgDiv.innerHTML = `
+                                <div>${coord.content}
+                                    <div style="font-size: 0.75rem; opacity: 0.6; margin-top: 4px;">
+                                        ${new Date(coord.timestamp).toLocaleTimeString()}
+                                    </div>
+                                </div>
+                            `;
+                            coordArea.appendChild(msgDiv);
+                            coordArea.scrollTop = coordArea.scrollHeight;
+                        });
+                    });
+                    
+                } catch (error) {
+                    console.error('Error loading saved data:', error);
+                    addCoordinationMessage('⚠️ Error loading previous session data. Starting fresh.');
+                }
+            }
+        }
+
+        // Platform-specific parsers (for future implementation)
+        function parseChatGPTShare(url) {
+            // Would implement actual ChatGPT share parsing
+            return simulateShareParsing('chatgpt', url);
+        }
+
+        function parseClaudeShare(url) {
+            // Would implement actual Claude share parsing
+            return simulateShareParsing('claude', url);
+        }
+
+        function parseGrokShare(url) {
+            // Would implement actual Grok share parsing
+            return simulateShareParsing('grok', url);
+        }
+
+        function parseGeminiShare(url) {
+            // Would implement actual Gemini share parsing
+            return simulateShareParsing('gemini', url);
+        }
+
+        function parsePerplexityShare(url) {
+            // Would implement actual Perplexity share parsing
+            return simulateShareParsing('perplexity', url);
+        }
+
+        // Auto-save every 30 seconds
+        setInterval(saveToStorage, 30000);
+
+        // Welcome message
+        setTimeout(() => {
+            addCoordinationMessage('🌐 Welcome to Universal AI Bridge! Ready to facilitate cross-platform AI collaboration.');
+        }, 1000);
+    </script>
+</body>
+</html>
