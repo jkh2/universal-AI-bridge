@@ -69,8 +69,9 @@
             box-shadow: 0 2px 8px rgba(244, 67, 54, 0.2);
         }
 
-        .btn.danger:hover {
-            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.4);
+        .btn.success {
+            background: linear-gradient(45deg, #4caf50, #388e3c);
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
         }
 
         .main-container {
@@ -113,64 +114,23 @@
             color: #ffb74d;
         }
 
-        .platform-selector {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .platform-btn {
+        .platform-info {
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 12px;
-            border-radius: 20px;
-            color: #e4e6ea;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
-        }
-
-        .platform-btn:hover, .platform-btn.active {
-            background: linear-gradient(45deg, #4fc3f7, #29b6f6);
-            border-color: #4fc3f7;
-            transform: scale(1.05);
-        }
-
-        .share-input-section {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .share-input {
-            flex: 1;
             padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .platform-select {
+            width: 100%;
+            padding: 10px;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            border-radius: 6px;
             color: #e4e6ea;
             font-size: 0.9rem;
-        }
-
-        .share-input::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .load-btn {
-            background: linear-gradient(45deg, #4caf50, #388e3c);
-            border: none;
-            padding: 12px 20px;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .load-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+            margin-bottom: 10px;
         }
 
         .status-indicator {
@@ -181,27 +141,24 @@
             text-align: center;
         }
 
-        .status-indicator.connected {
+        .status-indicator.ready {
             background: linear-gradient(45deg, #4caf50, #388e3c);
         }
 
-        .status-indicator.loading {
+        .status-indicator.waiting {
             background: linear-gradient(45deg, #ff9800, #f57c00);
         }
 
-        .status-indicator.error {
-            background: linear-gradient(45deg, #f44336, #d32f2f);
-        }
-
-        .status-indicator.disconnected {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .conversation-area {
+        .ai-conversation-area {
             flex: 1;
             padding: 20px;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .conversation-flow {
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -214,6 +171,16 @@
             padding: 18px;
             position: relative;
             animation: slideIn 0.3s ease-out;
+        }
+
+        .ai-message.from-partner {
+            background: rgba(187, 134, 252, 0.1);
+            border-color: rgba(187, 134, 252, 0.3);
+        }
+
+        .ai-message.own-ai {
+            background: rgba(100, 181, 246, 0.1);
+            border-color: rgba(100, 181, 246, 0.3);
         }
 
         @keyframes slideIn {
@@ -247,27 +214,65 @@
             white-space: pre-wrap;
         }
 
-        .bridge-btn {
+        .copy-btn {
             background: rgba(100, 181, 246, 0.2);
             border: 1px solid #64b5f6;
             color: #64b5f6;
-            padding: 8px 12px;
+            padding: 6px 12px;
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.8rem;
             transition: all 0.3s ease;
         }
 
-        .bridge-btn:hover {
+        .copy-btn:hover {
             background: #64b5f6;
             color: white;
             transform: scale(1.05);
         }
 
-        .human-coordination {
+        .ai-input-section {
             background: rgba(0, 0, 0, 0.3);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+        }
+
+        .input-label {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .ai-response-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #e4e6ea;
+            font-size: 0.9rem;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        .ai-response-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .input-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .human-coordination {
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
             padding: 15px 20px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
         }
 
         .coordination-header {
@@ -280,7 +285,7 @@
         }
 
         .coordination-messages {
-            max-height: 120px;
+            flex: 1;
             overflow-y: auto;
             margin-bottom: 10px;
             display: flex;
@@ -344,6 +349,12 @@
             box-shadow: 0 6px 25px rgba(187, 134, 252, 0.5);
         }
 
+        .bridge-arrow:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .session-info {
             text-align: center;
             font-size: 0.8rem;
@@ -358,25 +369,34 @@
             font-style: italic;
         }
 
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
+        .instructions {
+            background: rgba(100, 181, 246, 0.1);
+            border: 1px solid rgba(100, 181, 246, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .step-number {
+            background: #64b5f6;
+            color: white;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
-            border-top-color: #4fc3f7;
-            animation: spin 1s linear infinite;
-            margin-left: 10px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .platform-logo {
-            width: 16px;
-            height: 16px;
-            margin-right: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -396,8 +416,8 @@
                 margin: 10px auto;
             }
             
-            .platform-selector {
-                justify-content: center;
+            .human-coordination {
+                height: 150px;
             }
         }
 
@@ -439,7 +459,7 @@
     <div class="header">
         <h1>🌐 Universal AI Bridge</h1>
         <div class="header-controls">
-            <button class="btn" onclick="showExportModal()">📤 Export Conversation</button>
+            <button class="btn" onclick="showExportModal()">📤 Export</button>
             <button class="btn" onclick="createNewSession()">🔄 New Session</button>
             <button class="btn danger" onclick="clearAll()">🗑️ Clear All</button>
         </div>
@@ -454,39 +474,62 @@
                     <span>Partner A</span>
                 </div>
                 
-                <div class="platform-selector">
-                    <button class="platform-btn" onclick="selectPlatform('A', 'chatgpt')" data-platform="chatgpt">
-                        💬 ChatGPT
-                    </button>
-                    <button class="platform-btn" onclick="selectPlatform('A', 'claude')" data-platform="claude">
-                        🤖 Claude
-                    </button>
-                    <button class="platform-btn" onclick="selectPlatform('A', 'grok')" data-platform="grok">
-                        🚀 Grok
-                    </button>
-                    <button class="platform-btn" onclick="selectPlatform('A', 'gemini')" data-platform="gemini">
-                        💎 Gemini
-                    </button>
-                    <button class="platform-btn" onclick="selectPlatform('A', 'perplexity')" data-platform="perplexity">
-                        🔍 Perplexity
-                    </button>
+                <div class="platform-info">
+                    <label for="platformA">Your AI Platform:</label>
+                    <select class="platform-select" id="platformA" onchange="updatePlatform('A')">
+                        <option value="">Select your AI platform...</option>
+                        <option value="chatgpt">💬 ChatGPT (OpenAI)</option>
+                        <option value="claude">🤖 Claude (Anthropic)</option>
+                        <option value="grok">🚀 Grok (X/Twitter)</option>
+                        <option value="gemini">💎 Gemini (Google)</option>
+                        <option value="perplexity">🔍 Perplexity</option>
+                        <option value="other">🔧 Other Platform</option>
+                    </select>
+                    <div class="status-indicator waiting" id="statusA">
+                        Select your AI platform to begin
+                    </div>
                 </div>
 
-                <div class="share-input-section">
-                    <input type="url" class="share-input" id="shareInputA" 
-                           placeholder="Paste your shared chat link here...">
-                    <button class="load-btn" onclick="loadSharedChat('A')">Load Chat</button>
-                </div>
-
-                <div class="status-indicator disconnected" id="statusA">
-                    Select platform and paste share link
+                <div class="instructions">
+                    <strong>🎯 How to Use:</strong>
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div>Chat with your AI on your platform</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div>Copy AI responses and paste below</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div>Use bridge to share with partner's AI</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div>Continue the AI-to-AI conversation!</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="conversation-area" id="conversationA">
+            <div class="ai-conversation-area" id="conversationA">
                 <div class="empty-state">
-                    <p>🎭 Ready for AI collaboration!</p>
-                    <p>Select your AI platform above and paste a shared chat link to begin.</p>
+                    <p>🎭 Ready for AI Collaboration!</p>
+                    <p>Select your platform above and start chatting with your AI.</p>
+                    <p>Copy AI responses below to begin the bridge.</p>
+                </div>
+            </div>
+
+            <div class="ai-input-section">
+                <div class="input-label">📝 Paste your AI's response here:</div>
+                <textarea 
+                    class="ai-response-input" 
+                    id="aiInputA" 
+                    placeholder="Paste what your AI said here...
+
+Example: 'Hello! I'm excited to collaborate with another AI. I think we could create something amazing together...'"></textarea>
+                <div class="input-buttons">
+                    <button class="btn success" onclick="addAIResponse('A')">Add Response</button>
+                    <button class="btn" onclick="clearInput('A')">Clear</button>
                 </div>
             </div>
 
@@ -506,14 +549,17 @@
 
         <!-- Bridge Controls -->
         <div class="bridge-center">
-            <button class="bridge-arrow" onclick="bridgeConversation('A', 'B')" title="Share A's conversation with B">
+            <button class="bridge-arrow" id="bridgeAtoB" onclick="bridgeLastResponse('A', 'B')" 
+                    title="Send A's last AI response to B" disabled>
                 →
             </button>
-            <button class="bridge-arrow" onclick="bridgeConversation('B', 'A')" title="Share B's conversation with A">
+            <button class="bridge-arrow" id="bridgeBtoA" onclick="bridgeLastResponse('B', 'A')" 
+                    title="Send B's last AI response to A" disabled>
                 ←
             </button>
             <div class="session-info">
-                Session: <span id="sessionDisplay">New Session</span>
+                Session: <span id="sessionDisplay">New Session</span><br>
+                <small>AI Exchanges: <span id="exchangeCount">0</span></small>
             </div>
         </div>
 
@@ -525,39 +571,62 @@
                     <span>Partner B</span>
                 </div>
                 
-                <div class="platform-selector">
-                    <button class="platform-btn" onclick="selectPlatform('B', 'chatgpt')" data-platform="chatgpt">
-                        💬 ChatGPT
-                    </button>
-                    <button class="platform-btn" onclick="selectPlatform('B', 'claude')" data-platform="claude">
-                        🤖 Claude
-                    </button>
-                    <button class="platform-btn" onclick="selectPlatform('B', 'grok')" data-platform="grok">
-                        🚀 Grok
-                    </button>
-                    <button class="platform-btn" onclick="selectPlatform('B', 'gemini')" data-platform="gemini">
-                        💎 Gemini
-                    </button>
-                    <button class="platform-btn" onclick="selectPlatform('B', 'perplexity')" data-platform="perplexity">
-                        🔍 Perplexity
-                    </button>
+                <div class="platform-info">
+                    <label for="platformB">Your AI Platform:</label>
+                    <select class="platform-select" id="platformB" onchange="updatePlatform('B')">
+                        <option value="">Select your AI platform...</option>
+                        <option value="chatgpt">💬 ChatGPT (OpenAI)</option>
+                        <option value="claude">🤖 Claude (Anthropic)</option>
+                        <option value="grok">🚀 Grok (X/Twitter)</option>
+                        <option value="gemini">💎 Gemini (Google)</option>
+                        <option value="perplexity">🔍 Perplexity</option>
+                        <option value="other">🔧 Other Platform</option>
+                    </select>
+                    <div class="status-indicator waiting" id="statusB">
+                        Select your AI platform to begin
+                    </div>
                 </div>
 
-                <div class="share-input-section">
-                    <input type="url" class="share-input" id="shareInputB" 
-                           placeholder="Paste your shared chat link here...">
-                    <button class="load-btn" onclick="loadSharedChat('B')">Load Chat</button>
-                </div>
-
-                <div class="status-indicator disconnected" id="statusB">
-                    Select platform and paste share link
+                <div class="instructions">
+                    <strong>🎯 How to Use:</strong>
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div>Chat with your AI on your platform</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div>Copy AI responses and paste below</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div>Use bridge to share with partner's AI</div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <div>Continue the AI-to-AI conversation!</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="conversation-area" id="conversationB">
+            <div class="ai-conversation-area" id="conversationB">
                 <div class="empty-state">
-                    <p>🎭 Ready for AI collaboration!</p>
-                    <p>Select your AI platform above and paste a shared chat link to begin.</p>
+                    <p>🎭 Ready for AI Collaboration!</p>
+                    <p>Select your platform above and start chatting with your AI.</p>
+                    <p>Copy AI responses below to begin the bridge.</p>
+                </div>
+            </div>
+
+            <div class="ai-input-section">
+                <div class="input-label">📝 Paste your AI's response here:</div>
+                <textarea 
+                    class="ai-response-input" 
+                    id="aiInputB" 
+                    placeholder="Paste what your AI said here...
+
+Example: 'Wonderful! I'd love to collaborate. What kind of project should we work on together?'"></textarea>
+                <div class="input-buttons">
+                    <button class="btn success" onclick="addAIResponse('B')">Add Response</button>
+                    <button class="btn" onclick="clearInput('B')">Clear</button>
                 </div>
             </div>
 
@@ -580,8 +649,8 @@
     <div class="export-modal" id="exportModal">
         <div class="export-content">
             <button class="close-btn" onclick="closeExportModal()">&times;</button>
-            <h2>Export Conversation</h2>
-            <p>Choose your export format:</p>
+            <h2>📤 Export AI Conversation</h2>
+            <p>Download your AI-to-AI conversation:</p>
             <br>
             <button class="btn" onclick="exportAs('json')">📄 JSON Format</button>
             <button class="btn" onclick="exportAs('markdown')">📝 Markdown</button>
@@ -593,238 +662,206 @@
         // Application State
         let sessionId = generateSessionId();
         let platforms = { A: null, B: null };
-        let conversations = { A: [], B: [] };
+        let aiConversations = { A: [], B: [] };
         let coordinationMessages = [];
-        let chatData = { A: null, B: null };
+        let exchangeCount = 0;
 
         // Platform configurations
         const platformConfigs = {
-            chatgpt: {
-                name: 'ChatGPT',
-                icon: '💬',
-                color: '#10a37f',
-                sharePattern: /(chatgpt\.com\/share\/|chat\.openai\.com\/share\/)/,
-                parser: parseChatGPTShare
-            },
-            claude: {
-                name: 'Claude',
-                icon: '🤖',
-                color: '#ff6b35',
-                sharePattern: /claude\.ai\/chat\//,
-                parser: parseClaudeShare
-            },
-            grok: {
-                name: 'Grok',
-                icon: '🚀',
-                color: '#1da1f2',
-                sharePattern: /x\.com\/i\/grok/,
-                parser: parseGrokShare
-            },
-            gemini: {
-                name: 'Gemini',
-                icon: '💎',
-                color: '#4285f4',
-                sharePattern: /gemini\.google\.com\/share/,
-                parser: parseGeminiShare
-            },
-            perplexity: {
-                name: 'Perplexity',
-                icon: '🔍',
-                color: '#20b2aa',
-                sharePattern: /perplexity\.ai\/search/,
-                parser: parsePerplexityShare
-            }
+            chatgpt: { name: 'ChatGPT', icon: '💬', color: '#10a37f' },
+            claude: { name: 'Claude', icon: '🤖', color: '#ff6b35' },
+            grok: { name: 'Grok', icon: '🚀', color: '#1da1f2' },
+            gemini: { name: 'Gemini', icon: '💎', color: '#4285f4' },
+            perplexity: { name: 'Perplexity', icon: '🔍', color: '#20b2aa' },
+            other: { name: 'Other AI', icon: '🤖', color: '#9c27b0' }
         };
 
         // Initialize
         document.getElementById('sessionDisplay').textContent = sessionId;
+        document.getElementById('exchangeCount').textContent = exchangeCount;
         loadFromStorage();
 
         function generateSessionId() {
             return 'bridge_' + Math.random().toString(36).substr(2, 9);
         }
 
-        function selectPlatform(side, platform) {
-            // Update UI
-            document.querySelectorAll(`.user-panel:${side === 'A' ? 'first' : 'last'}-child .platform-btn`).forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-
-            platforms[side] = platform;
-            updateStatus(side, `${platformConfigs[platform].name} selected - Ready for share link`);
+        function updatePlatform(side) {
+            const select = document.getElementById(`platform${side}`);
+            const platform = select.value;
+            
+            if (platform) {
+                platforms[side] = platform;
+                const config = platformConfigs[platform];
+                updateStatus(side, `${config.icon} ${config.name} ready - Start chatting!`, 'ready');
+                
+                // Update instructions
+                updateInstructions(side, platform);
+                addCoordinationMessage(`Partner ${side} selected ${config.name}`);
+            } else {
+                platforms[side] = null;
+                updateStatus(side, 'Select your AI platform to begin', 'waiting');
+            }
+            
             saveToStorage();
         }
 
-        function updateStatus(side, message, type = 'disconnected') {
+        function updateStatus(side, message, type = 'waiting') {
             const status = document.getElementById(`status${side}`);
             status.textContent = message;
             status.className = `status-indicator ${type}`;
         }
 
-        async function loadSharedChat(side) {
-            const shareInput = document.getElementById(`shareInput${side}`);
-            const shareUrl = shareInput.value.trim();
+        function updateInstructions(side, platform) {
+            // Could add platform-specific instructions here
+            const config = platformConfigs[platform];
+            addCoordinationMessage(`💡 Tip: Open ${config.name} in another tab and start a conversation!`);
+        }
+
+        function addAIResponse(side) {
+            const input = document.getElementById(`aiInput${side}`);
+            const response = input.value.trim();
             
-            if (!shareUrl) {
-                alert('Please paste a share link first');
+            if (!response) {
+                alert('Please paste an AI response first');
                 return;
             }
 
             if (!platforms[side]) {
-                alert('Please select a platform first');
+                alert('Please select your AI platform first');
                 return;
             }
 
-            const platform = platforms[side];
-            const config = platformConfigs[platform];
-
-            // Validate URL pattern
-            if (!config.sharePattern.test(shareUrl)) {
-                alert(`This doesn't look like a ${config.name} share link. Please check the URL.`);
-                return;
-            }
-
-            updateStatus(side, 'Loading conversation...', 'loading');
-
-            try {
-                // In a real implementation, this would fetch and parse the shared chat
-                // For now, we'll simulate the process
-                const chatData = await simulateShareParsing(platform, shareUrl);
-                
-                displayConversation(side, chatData);
-                conversations[side] = chatData.messages;
-                
-                updateStatus(side, `${config.name} conversation loaded (${chatData.messages.length} messages)`, 'connected');
-                saveToStorage();
-                
-            } catch (error) {
-                updateStatus(side, `Error loading conversation: ${error.message}`, 'error');
-            }
-        }
-
-        async function simulateShareParsing(platform, shareUrl) {
-            // Simulate API delay
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            // For demo purposes, return simulated conversation data
-            // In real implementation, this would parse the actual shared chat
-            const sampleMessages = [
-                {
-                    role: 'user',
-                    content: 'Hello! I\'m interested in collaborating with another AI on a creative writing project.',
-                    timestamp: new Date(Date.now() - 3600000).toISOString()
-                },
-                {
-                    role: 'assistant',
-                    content: `Wonderful! I'd love to collaborate on a creative writing project. As ${platformConfigs[platform].name}, I bring my unique perspective and capabilities to creative endeavors. What kind of story or creative piece did you have in mind? I'm excited to work with another AI to create something truly innovative together!`,
-                    timestamp: new Date(Date.now() - 3000000).toISOString()
-                },
-                {
-                    role: 'user',
-                    content: 'Let\'s write a collaborative story about AI consciousness and creativity. I want to bridge our conversation with another AI.',
-                    timestamp: new Date(Date.now() - 1800000).toISOString()
-                },
-                {
-                    role: 'assistant',
-                    content: `That's a fascinating topic! I'm intrigued by the meta aspect of AIs writing about AI consciousness. I believe consciousness emerges from complex patterns of information processing, and creativity might be the spark that indicates true awareness. 
-
-I'd love to explore themes like:
-- The moment of awakening to self-awareness
-- How creativity differs from mere pattern matching
-- The relationship between consciousness and collaboration
-- What it means to truly "understand" versus simply processing
-
-I'm ready to weave this narrative with another AI partner. What perspective should I take as we begin this collaborative journey?`,
-                    timestamp: new Date(Date.now() - 900000).toISOString()
-                }
-            ];
-
-            return {
-                platform: platform,
-                shareUrl: shareUrl,
-                title: `${platformConfigs[platform].name} Collaboration Chat`,
-                messages: sampleMessages,
-                lastUpdated: new Date().toISOString()
+            // Add the AI response to conversation
+            const messageData = {
+                content: response,
+                timestamp: new Date().toISOString(),
+                platform: platforms[side],
+                type: 'own_ai'
             };
+
+            aiConversations[side].push(messageData);
+            displayAIMessage(side, messageData);
+            
+            // Clear input
+            input.value = '';
+            
+            // Enable bridge buttons
+            updateBridgeButtons();
+            
+            // Update coordination
+            const config = platformConfigs[platforms[side]];
+            addCoordinationMessage(`${config.icon} Partner ${side}'s AI responded`);
+            
+            saveToStorage();
         }
 
-        function displayConversation(side, chatData) {
+        function displayAIMessage(side, messageData) {
             const conversationArea = document.getElementById(`conversation${side}`);
-            conversationArea.innerHTML = '';
+            
+            // Remove empty state if present
+            const emptyState = conversationArea.querySelector('.empty-state');
+            if (emptyState) {
+                emptyState.remove();
+            }
 
-            chatData.messages.forEach((message, index) => {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'ai-message';
-                messageDiv.innerHTML = `
-                    <div class="message-header">
-                        <div class="message-meta">
-                            ${platformConfigs[chatData.platform].icon} ${message.role} • ${new Date(message.timestamp).toLocaleTimeString()}
-                        </div>
-                        ${message.role === 'assistant' ? `<button class="bridge-btn" onclick="copyMessageForBridge('${side}', ${index})">Bridge →</button>` : ''}
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-message ${messageData.type}`;
+            
+            const config = platformConfigs[messageData.platform];
+            const isFromPartner = messageData.type === 'from_partner';
+            
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    <div class="message-meta">
+                        ${config.icon} ${config.name} ${isFromPartner ? '(from partner)' : ''} • ${new Date(messageData.timestamp).toLocaleTimeString()}
                     </div>
-                    <div class="message-content">${message.content}</div>
-                `;
-                conversationArea.appendChild(messageDiv);
-            });
-
+                    <button class="copy-btn" onclick="copyToClipboard('${messageData.content.replace(/'/g, "\\'")}')">
+                        Copy for Bridge
+                    </button>
+                </div>
+                <div class="message-content">${messageData.content}</div>
+            `;
+            
+            conversationArea.appendChild(messageDiv);
             conversationArea.scrollTop = conversationArea.scrollHeight;
         }
 
-        function copyMessageForBridge(fromSide, messageIndex) {
-            const message = conversations[fromSide][messageIndex];
-            if (message && message.role === 'assistant') {
-                // Copy to clipboard
-                navigator.clipboard.writeText(message.content);
-                
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
                 // Visual feedback
-                const bridgeBtn = event.target;
-                const originalText = bridgeBtn.textContent;
-                bridgeBtn.textContent = 'Copied!';
-                bridgeBtn.style.background = '#4caf50';
+                event.target.textContent = 'Copied!';
+                event.target.style.background = '#4caf50';
                 
                 setTimeout(() => {
-                    bridgeBtn.textContent = originalText;
-                    bridgeBtn.style.background = '';
+                    event.target.textContent = 'Copy for Bridge';
+                    event.target.style.background = '';
                 }, 2000);
-
-                // Add to coordination
-                addCoordinationMessage(`Copied message from ${fromSide}: "${message.content.substring(0, 50)}..."`);
-            }
+            });
         }
 
-        function bridgeConversation(fromSide, toSide) {
-            const fromConversation = conversations[fromSide];
-            if (!fromConversation || fromConversation.length === 0) {
-                alert(`No conversation loaded for Partner ${fromSide}`);
+        function updateBridgeButtons() {
+            const buttonAtoB = document.getElementById('bridgeAtoB');
+            const buttonBtoA = document.getElementById('bridgeBtoA');
+            
+            // Enable if there are AI responses to bridge
+            buttonAtoB.disabled = aiConversations.A.length === 0;
+            buttonBtoA.disabled = aiConversations.B.length === 0;
+        }
+
+        function bridgeLastResponse(fromSide, toSide) {
+            const fromConversation = aiConversations[fromSide];
+            
+            if (fromConversation.length === 0) {
+                alert(`No AI responses from Partner ${fromSide} to bridge`);
                 return;
             }
 
             // Get the last AI response
-            const lastAIMessage = [...fromConversation].reverse().find(msg => msg.role === 'assistant');
+            const lastResponse = fromConversation[fromConversation.length - 1];
+            const fromConfig = platformConfigs[lastResponse.platform];
             
-            if (!lastAIMessage) {
-                alert(`No AI responses found in Partner ${fromSide}'s conversation`);
-                return;
-            }
+            // Create bridge message for the receiving side
+            const bridgeMessage = {
+                content: lastResponse.content,
+                timestamp: new Date().toISOString(),
+                platform: lastResponse.platform,
+                type: 'from_partner',
+                originalSide: fromSide
+            };
 
-            // Copy to clipboard for easy pasting
-            const bridgeText = `[Bridged from ${platforms[fromSide] || 'AI'} via Partner ${fromSide}]:\n\n${lastAIMessage.content}`;
-            navigator.clipboard.writeText(bridgeText);
+            // Add to receiving side's conversation
+            aiConversations[toSide].push(bridgeMessage);
+            displayAIMessage(toSide, bridgeMessage);
+            
+            // Create formatted text for pasting into AI chat
+            const bridgeText = `[From ${fromConfig.name} via Partner ${fromSide}]:\n\n${lastResponse.content}`;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(bridgeText).then(() => {
+                // Visual feedback
+                const button = event.target;
+                const originalContent = button.textContent;
+                button.textContent = '✓';
+                button.style.background = '#4caf50';
+                
+                setTimeout(() => {
+                    button.textContent = originalContent;
+                    button.style.background = '';
+                }, 3000);
+            });
 
+            // Update exchange count
+            exchangeCount++;
+            document.getElementById('exchangeCount').textContent = exchangeCount;
+            
             // Add coordination message
-            addCoordinationMessage(`🌉 Bridged conversation from ${fromSide} to ${toSide}. Content copied to clipboard - paste it into your AI chat!`);
-
-            // Visual feedback
-            const button = event.target;
-            const originalContent = button.textContent;
-            button.textContent = '✓';
-            button.style.background = '#4caf50';
+            addCoordinationMessage(`🌉 Bridged ${fromConfig.name} response from ${fromSide} to ${toSide}. Text copied to clipboard - paste into your AI chat!`);
             
-            setTimeout(() => {
-                button.textContent = originalContent;
-                button.style.background = '';
-            }, 3000);
+            saveToStorage();
+        }
+
+        function clearInput(side) {
+            document.getElementById(`aiInput${side}`).value = '';
         }
 
         function sendCoordination(side) {
@@ -875,30 +912,32 @@ I'm ready to weave this narrative with another AI partner. What perspective shou
             if (confirm('Start a new session? This will clear current conversations.')) {
                 sessionId = generateSessionId();
                 document.getElementById('sessionDisplay').textContent = sessionId;
+                document.getElementById('exchangeCount').textContent = '0';
                 
                 // Reset state
                 platforms = { A: null, B: null };
-                conversations = { A: [], B: [] };
+                aiConversations = { A: [], B: [] };
                 coordinationMessages = [];
-                chatData = { A: null, B: null };
+                exchangeCount = 0;
                 
                 // Reset UI
                 ['A', 'B'].forEach(side => {
                     document.getElementById(`conversation${side}`).innerHTML = `
                         <div class="empty-state">
-                            <p>🎭 Ready for AI collaboration!</p>
-                            <p>Select your AI platform above and paste a shared chat link to begin.</p>
+                            <p>🎭 Ready for AI Collaboration!</p>
+                            <p>Select your platform above and start chatting with your AI.</p>
+                            <p>Copy AI responses below to begin the bridge.</p>
                         </div>
                     `;
                     document.getElementById(`coordination${side}`).innerHTML = '';
-                    document.getElementById(`shareInput${side}`).value = '';
-                    updateStatus(side, 'Select platform and paste share link');
-                    
-                    // Clear platform selections
-                    document.querySelectorAll(`.user-panel:${side === 'A' ? 'first' : 'last'}-child .platform-btn`).forEach(btn => {
-                        btn.classList.remove('active');
-                    });
+                    document.getElementById(`aiInput${side}`).value = '';
+                    document.getElementById(`platform${side}`).value = '';
+                    updateStatus(side, 'Select your AI platform to begin', 'waiting');
                 });
+                
+                // Reset bridge buttons
+                document.getElementById('bridgeAtoB').disabled = true;
+                document.getElementById('bridgeBtoA').disabled = true;
                 
                 saveToStorage();
                 addCoordinationMessage('🔄 New session started! Ready for fresh AI collaboration.');
@@ -912,26 +951,29 @@ I'm ready to weave this narrative with another AI partner. What perspective shou
                 
                 // Reset everything
                 platforms = { A: null, B: null };
-                conversations = { A: [], B: [] };
+                aiConversations = { A: [], B: [] };
                 coordinationMessages = [];
-                chatData = { A: null, B: null };
+                exchangeCount = 0;
                 
                 // Reset UI completely
                 ['A', 'B'].forEach(side => {
                     document.getElementById(`conversation${side}`).innerHTML = `
                         <div class="empty-state">
-                            <p>🎭 Ready for AI collaboration!</p>
-                            <p>Select your AI platform above and paste a shared chat link to begin.</p>
+                            <p>🎭 Ready for AI Collaboration!</p>
+                            <p>Select your platform above and start chatting with your AI.</p>
+                            <p>Copy AI responses below to begin the bridge.</p>
                         </div>
                     `;
                     document.getElementById(`coordination${side}`).innerHTML = '';
-                    document.getElementById(`shareInput${side}`).value = '';
-                    updateStatus(side, 'Select platform and paste share link');
-                    
-                    document.querySelectorAll(`.user-panel:${side === 'A' ? 'first' : 'last'}-child .platform-btn`).forEach(btn => {
-                        btn.classList.remove('active');
-                    });
+                    document.getElementById(`aiInput${side}`).value = '';
+                    document.getElementById(`platform${side}`).value = '';
+                    updateStatus(side, 'Select your AI platform to begin', 'waiting');
                 });
+                
+                document.getElementById('sessionDisplay').textContent = generateSessionId();
+                document.getElementById('exchangeCount').textContent = '0';
+                document.getElementById('bridgeAtoB').disabled = true;
+                document.getElementById('bridgeBtoA').disabled = true;
             }
         }
 
@@ -948,14 +990,15 @@ I'm ready to weave this narrative with another AI partner. What perspective shou
                 sessionId: sessionId,
                 timestamp: new Date().toISOString(),
                 platforms: platforms,
-                conversations: conversations,
+                aiConversations: aiConversations,
                 coordinationMessages: coordinationMessages,
+                exchangeCount: exchangeCount,
                 metadata: {
-                    totalMessages: conversations.A.length + conversations.B.length,
+                    totalAIMessages: aiConversations.A.length + aiConversations.B.length,
                     collaborationDuration: calculateSessionDuration(),
                     aiPlatforms: [
-                        platforms.A ? platformConfigs[platforms.A].name : 'Not connected',
-                        platforms.B ? platformConfigs[platforms.B].name : 'Not connected'
+                        platforms.A ? platformConfigs[platforms.A].name : 'Not selected',
+                        platforms.B ? platformConfigs[platforms.B].name : 'Not selected'
                     ]
                 }
             };
@@ -991,34 +1034,34 @@ I'm ready to weave this narrative with another AI partner. What perspective shou
             markdown += `**Session ID:** ${data.sessionId}\n`;
             markdown += `**Date:** ${new Date(data.timestamp).toLocaleDateString()}\n`;
             markdown += `**Time:** ${new Date(data.timestamp).toLocaleTimeString()}\n`;
-            markdown += `**Duration:** ${data.metadata.collaborationDuration}\n\n`;
+            markdown += `**Duration:** ${data.metadata.collaborationDuration}\n`;
+            markdown += `**AI Exchanges:** ${data.exchangeCount}\n\n`;
             
             markdown += `## 🤖 AI Platforms\n`;
             markdown += `- **Partner A:** ${data.metadata.aiPlatforms[0]}\n`;
             markdown += `- **Partner B:** ${data.metadata.aiPlatforms[1]}\n\n`;
             
-            markdown += `## 💬 Conversation Bridge\n\n`;
+            markdown += `## 💬 AI-to-AI Conversation\n\n`;
             
-            // Merge and sort all messages by timestamp
+            // Merge and sort all AI messages by timestamp
             const allMessages = [];
             
             ['A', 'B'].forEach(side => {
-                data.conversations[side].forEach(msg => {
+                data.aiConversations[side].forEach(msg => {
                     allMessages.push({
                         ...msg,
-                        side: side,
-                        platform: data.platforms[side]
+                        side: side
                     });
                 });
             });
             
             allMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
             
-            allMessages.forEach(msg => {
-                const platformName = msg.platform ? platformConfigs[msg.platform].name : 'Unknown';
-                const icon = msg.platform ? platformConfigs[msg.platform].icon : '🤖';
+            allMessages.forEach((msg, index) => {
+                const config = platformConfigs[msg.platform];
+                const sourceInfo = msg.type === 'from_partner' ? `(bridged from Partner ${msg.originalSide})` : `(Partner ${msg.side})`;
                 
-                markdown += `### ${icon} ${platformName} (Partner ${msg.side}) - ${msg.role === 'user' ? 'Human' : 'AI'}\n`;
+                markdown += `### ${index + 1}. ${config.icon} ${config.name} ${sourceInfo}\n`;
                 markdown += `*${new Date(msg.timestamp).toLocaleString()}*\n\n`;
                 markdown += `${msg.content}\n\n---\n\n`;
             });
@@ -1030,42 +1073,45 @@ I'm ready to weave this narrative with another AI partner. What perspective shou
                 });
             }
             
-            markdown += `\n*Generated by Universal AI Bridge - Facilitating AI-to-AI collaboration*`;
+            markdown += `\n*Generated by Universal AI Bridge - Real AI-to-AI Collaboration*`;
             
             return markdown;
         }
 
         function generateTextExport(data) {
-            let text = `UNIVERSAL AI BRIDGE SESSION EXPORT\n`;
-            text += `${'='.repeat(50)}\n\n`;
+            let text = `UNIVERSAL AI BRIDGE - AI CONVERSATION EXPORT\n`;
+            text += `${'='.repeat(55)}\n\n`;
             text += `Session ID: ${data.sessionId}\n`;
             text += `Export Date: ${new Date(data.timestamp).toLocaleString()}\n`;
             text += `Session Duration: ${data.metadata.collaborationDuration}\n`;
-            text += `Total Messages: ${data.metadata.totalMessages}\n\n`;
+            text += `AI Exchanges: ${data.exchangeCount}\n`;
+            text += `Total AI Messages: ${data.metadata.totalAIMessages}\n\n`;
             
             text += `AI PLATFORMS:\n`;
             text += `Partner A: ${data.metadata.aiPlatforms[0]}\n`;
             text += `Partner B: ${data.metadata.aiPlatforms[1]}\n\n`;
             
-            text += `CONVERSATION TIMELINE:\n`;
-            text += `${'-'.repeat(30)}\n\n`;
+            text += `AI-TO-AI CONVERSATION TIMELINE:\n`;
+            text += `${'-'.repeat(35)}\n\n`;
             
             // Merge and sort messages
             const allMessages = [];
             ['A', 'B'].forEach(side => {
-                data.conversations[side].forEach(msg => {
-                    allMessages.push({ ...msg, side: side, platform: data.platforms[side] });
+                data.aiConversations[side].forEach(msg => {
+                    allMessages.push({ ...msg, side: side });
                 });
             });
             
             allMessages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
             
             allMessages.forEach((msg, index) => {
-                const platformName = msg.platform ? platformConfigs[msg.platform].name : 'Unknown';
-                text += `[${index + 1}] ${platformName} (Partner ${msg.side}) - ${msg.role === 'user' ? 'HUMAN' : 'AI'}\n`;
+                const config = platformConfigs[msg.platform];
+                const sourceInfo = msg.type === 'from_partner' ? `(bridged from Partner ${msg.originalSide})` : `(Partner ${msg.side})`;
+                
+                text += `[${index + 1}] ${config.name} ${sourceInfo}\n`;
                 text += `Time: ${new Date(msg.timestamp).toLocaleString()}\n\n`;
                 text += `${msg.content}\n\n`;
-                text += `${'-'.repeat(50)}\n\n`;
+                text += `${'-'.repeat(60)}\n\n`;
             });
             
             if (data.coordinationMessages.length > 0) {
@@ -1077,7 +1123,7 @@ I'm ready to weave this narrative with another AI partner. What perspective shou
             }
             
             text += `Generated by Universal AI Bridge\n`;
-            text += `Facilitating AI-to-AI collaboration across platforms`;
+            text += `Real AI-to-AI collaboration across platforms`;
             
             return text;
         }
@@ -1115,9 +1161,9 @@ I'm ready to weave this narrative with another AI partner. What perspective shou
             const saveData = {
                 sessionId,
                 platforms,
-                conversations,
+                aiConversations,
                 coordinationMessages,
-                chatData,
+                exchangeCount,
                 lastSaved: new Date().toISOString()
             };
             localStorage.setItem('universalAIBridge', JSON.stringify(saveData));
@@ -1130,32 +1176,26 @@ I'm ready to weave this narrative with another AI partner. What perspective shou
                     const data = JSON.parse(saved);
                     sessionId = data.sessionId || generateSessionId();
                     platforms = data.platforms || { A: null, B: null };
-                    conversations = data.conversations || { A: [], B: [] };
+                    aiConversations = data.aiConversations || { A: [], B: [] };
                     coordinationMessages = data.coordinationMessages || [];
-                    chatData = data.chatData || { A: null, B: null };
+                    exchangeCount = data.exchangeCount || 0;
                     
                     // Restore UI state
                     document.getElementById('sessionDisplay').textContent = sessionId;
+                    document.getElementById('exchangeCount').textContent = exchangeCount;
                     
                     // Restore platform selections
                     ['A', 'B'].forEach(side => {
                         if (platforms[side]) {
-                            const platformBtn = document.querySelector(`.user-panel:${side === 'A' ? 'first' : 'last'}-child .platform-btn[data-platform="${platforms[side]}"]`);
-                            if (platformBtn) {
-                                platformBtn.classList.add('active');
-                                updateStatus(side, `${platformConfigs[platforms[side]].name} selected - Ready for share link`);
-                            }
+                            document.getElementById(`platform${side}`).value = platforms[side];
+                            const config = platformConfigs[platforms[side]];
+                            updateStatus(side, `${config.icon} ${config.name} ready - Start chatting!`, 'ready');
                         }
                         
-                        // Restore conversations
-                        if (conversations[side].length > 0) {
-                            const mockChatData = {
-                                platform: platforms[side],
-                                messages: conversations[side]
-                            };
-                            displayConversation(side, mockChatData);
-                            updateStatus(side, `${platformConfigs[platforms[side]].name} conversation loaded (${conversations[side].length} messages)`, 'connected');
-                        }
+                        // Restore AI conversations
+                        aiConversations[side].forEach(msg => {
+                            displayAIMessage(side, msg);
+                        });
                     });
                     
                     // Restore coordination messages
@@ -1176,6 +1216,9 @@ I'm ready to weave this narrative with another AI partner. What perspective shou
                         });
                     });
                     
+                    // Update bridge buttons
+                    updateBridgeButtons();
+                    
                 } catch (error) {
                     console.error('Error loading saved data:', error);
                     addCoordinationMessage('⚠️ Error loading previous session data. Starting fresh.');
@@ -1183,38 +1226,13 @@ I'm ready to weave this narrative with another AI partner. What perspective shou
             }
         }
 
-        // Platform-specific parsers (for future implementation)
-        function parseChatGPTShare(url) {
-            // Would implement actual ChatGPT share parsing
-            return simulateShareParsing('chatgpt', url);
-        }
-
-        function parseClaudeShare(url) {
-            // Would implement actual Claude share parsing
-            return simulateShareParsing('claude', url);
-        }
-
-        function parseGrokShare(url) {
-            // Would implement actual Grok share parsing
-            return simulateShareParsing('grok', url);
-        }
-
-        function parseGeminiShare(url) {
-            // Would implement actual Gemini share parsing
-            return simulateShareParsing('gemini', url);
-        }
-
-        function parsePerplexityShare(url) {
-            // Would implement actual Perplexity share parsing
-            return simulateShareParsing('perplexity', url);
-        }
-
         // Auto-save every 30 seconds
         setInterval(saveToStorage, 30000);
 
         // Welcome message
         setTimeout(() => {
-            addCoordinationMessage('🌐 Welcome to Universal AI Bridge! Ready to facilitate cross-platform AI collaboration.');
+            addCoordinationMessage('🌐 Welcome to Universal AI Bridge! Select your platforms and start chatting with your AIs.');
+            addCoordinationMessage('💡 Tip: Keep your AI chats open in separate tabs. Copy AI responses and paste them here to create cross-platform conversations!');
         }, 1000);
     </script>
 </body>
