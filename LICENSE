@@ -1,10 +1,64 @@
-GNU AFFERO GENERAL PUBLIC LICENSE
-Version 3, 19 November 2007
+# Universal AI Bridge License
 
-Copyright (C) 2025 James Keith Harwood II
+## Dual License Structure
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, version 3.
+This project is available under two licensing options:
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+### 1. Educational/Research License (Free)
 
-You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
+**Permission is hereby granted to:**
+- Use, copy, modify, and distribute this software for educational purposes
+- Conduct research and experimentation with the Universal AI Bridge concept
+- Create derivative works for non-commercial learning and development
+
+**Requirements:**
+- Attribution must be given to James Keith Harwood II as the original creator
+- This license notice must be included in all copies or substantial portions
+- Any modifications or improvements should reference the original work
+- Commercial use requires separate licensing (see below)
+
+### 2. Commercial License (Contact Required)
+
+**For commercial implementation, production deployment, or revenue-generating use:**
+- Contact James Keith Harwood II for commercial licensing terms
+- Custom licensing available for startups, enterprises, and collaborations
+- Revenue sharing and partnership opportunities available
+- Technical support and consultation included with commercial licenses
+
+## Intellectual Property Notice
+
+This Universal AI Bridge concept and implementation represents original intellectual property developed by James Keith Harwood II in collaboration with Claude (Anthropic) during 2024-2025. The core innovation of autonomous AI-to-AI conversation orchestration with human intervention modes is protected by blockchain-timestamped IP declarations.
+
+## Attribution Requirements
+
+When using this work under the Educational/Research License, please include:
+
+```
+Universal AI Bridge - Revolutionary AI Collaboration Platform
+Created by James Keith Harwood II
+Original concept developed in partnership with Claude (Anthropic)
+Repository: https://github.com/jkh2/universal-ai-bridge
+Website: https://jameskeithharwood.com
+```
+
+## Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Contact Information
+
+**For Commercial Licensing, Partnerships, or Questions:**
+- Website: https://jameskeithharwood.com
+- Email: [your contact email]
+- Professional Inquiries: Available for immediate engagement
+
+## Development Timeline
+
+- **Concept Development:** [7/20/25]
+- **IP Protection:** [07/20/25]
+- **Revolutionary Implementation:** [Today's date]
+- **Prior Art Research:** Independent development verified through commit history
+
+---
+
+*This license structure protects the creator's intellectual property while encouraging educational use and commercial collaboration opportunities.*
